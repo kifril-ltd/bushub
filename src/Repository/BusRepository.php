@@ -19,22 +19,18 @@ class BusRepository extends ServiceEntityRepository
         parent::__construct($registry, Bus::class);
     }
 
-    // /**
-    //  * @return Bus[] Returns an array of Bus objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Bus[] Returns an array of Bus objects
+     */
+    public function findAllUnused()
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('b.trip = :val')
+            ->setParameter('val', null)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Bus

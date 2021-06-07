@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список рейсов{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for trip in trips %}
+            <div class="card w-75 mx-auto my-2">
+                <div class="card-header">
+                    <h5>Время отправления: {{ trip.departureTime|date('H:i') }}</h5>
+                    <h5>Время прибытия: {{ trip.arrivalTime|date('H:i') }}</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Регулярность</h6>
+                    {% for weekday in trip.regularity %}
+                    <span class="lead"><span class="badge badge-light">{{ weekday }}</span></span>
+                    {% endfor %}
+                </div>
+                {% if app.user %}
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Купить билет</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -28,9 +28,15 @@ class Bus
     private $seatsNumber;
 
     /**
-     * @ORM\OneToOne(targetEntity=Trip::class, mappedBy="bus", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Trip::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="trip_id", referencedColumnName="id", nullable=true)
      */
     private $trip;
+
+    public function __toString()
+    {
+        return $this->licensePlate . ' | ' . "мест: $this->seatsNumber";
+    }
 
     public function getId(): ?int
     {

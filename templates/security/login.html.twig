@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block body %}
+<div class="container h-100">
+    <div class="row align-items-center h-100" style="margin-top: 10rem;">
+        <div class="col-5 mx-auto">
+    <div class="card">
+        <article class="card-body">
+            <a href="" class="float-right btn btn-outline-primary">Регистрация</a>
+            <h4 class="card-title mb-4 mt-1">Вход</h4>
+            <form method="post">
+
+                <label for="inputEmail">Email</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                       autocomplete="email" required autofocus>
+                <label for="inputPassword">Пароль</label>
+                <input type="password" name="password" id="inputPassword" class="form-control"
+                       autocomplete="current-password" required>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <button class="btn btn-lg btn-primary btn-block my-2" type="submit">
+                    Войти
+                </button>
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            </form>
+        </article>
+    </div> <!-- card.// -->
+        </div>
+    </div>
+
+{% endblock %}

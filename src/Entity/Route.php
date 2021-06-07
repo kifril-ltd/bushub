@@ -50,6 +50,11 @@ class Route
      */
     private $trips;
 
+    public function __toString()
+    {
+        return "$this->departurePoint - $this->arrivalPoint";
+    }
+
     public function __construct()
     {
         $this->trips = new ArrayCollection();

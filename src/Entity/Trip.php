@@ -46,14 +46,22 @@ class Trip
     private $tickets;
 
     /**
-     * @ORM\OneToOne(targetEntity=Bus::class, inversedBy="trip", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=Bus::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="bus_id", referencedColumnName="id", nullable=true)
      */
     private $bus;
 
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        $route = $this->getRoute();
+        return $route->getDeparturePoint() . ' '
+            . $route->getArrivalPoint() . '|'
+            . $this->getDepartureTime()->format('H:i');
     }
 
     public function getId(): ?int
