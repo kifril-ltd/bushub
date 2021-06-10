@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,9 +17,8 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Type;
-use Symfony\Component\Validator\Constraints\Unique;
 
-class RegistrationFormType extends AbstractType
+class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -30,36 +28,6 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Введите email'
                     ])
-                ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'label' => 'Соглашаюсь с политикой конфиденциальности',
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Вы должны согласиться с политикой конфиденциальности',
-                    ]),
-                ],
-            ])
-            ->add('plainPassword', RepeatedType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Пароль'),
-                'second_options' => array('label' => 'Подтверждение пароля'),
-                'invalid_message' => 'Пароли должны совпадать',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Введите пароль',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Пароль должен быть не короче {{ limit }} символов',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-
                 ],
             ])
             ->add('firstName', TextType::class, [

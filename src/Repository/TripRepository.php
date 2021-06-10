@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Bus;
 use App\Entity\Trip;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,22 +21,22 @@ class TripRepository extends ServiceEntityRepository
         parent::__construct($registry, Trip::class);
     }
 
-    // /**
-    //  * @return Trip[] Returns an array of Trip objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Trip[] Returns an array of Trip objects
+    */
+
+    public function findAllTripsWithBus4Route($route)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->Where('t.route = :val')
+            ->setParameter('val', $route)
+            ->innerJoin(Bus::class, 'b', Join::WITH, 'b.trip = t.id')
+            ->AndWhere('b.trip is NOT NULL')
+            ->orderBy('t.departureTime', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Trip

@@ -46,10 +46,11 @@ class Trip
     private $tickets;
 
     /**
-     * @ORM\OneToOne(targetEntity=Bus::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="bus_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne(targetEntity=Bus::class, mappedBy="trip", cascade={"persist", "remove"})
      */
     private $bus;
+
+
 
     public function __construct()
     {
@@ -152,10 +153,25 @@ class Trip
         return $this->bus;
     }
 
-    public function setBus(Bus $bus): self
+    public function setBus(?Bus $bus): self
     {
+        // unset the owning side of the relation if necessary
+        if ($bus === null && $this->bus !== null) {
+            $this->bus->setTrip(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($bus !== null && $bus->getTrip() !== $this) {
+            $bus->setTrip($this);
+        }
+
         $this->bus = $bus;
 
         return $this;
+    }
+
+    public function getPrice() : float
+    {
+        return round((float)$this->getRoute()->getCostPrice() / (float)$this->getBus()->getSeatsNumber() * 3, 0);
     }
 }

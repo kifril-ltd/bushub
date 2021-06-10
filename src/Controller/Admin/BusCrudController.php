@@ -23,7 +23,7 @@ class BusCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('licensePlate', 'Гос. номер'),
             IntegerField::new('seatsNumber', 'Количество мест'),
-            AssociationField::new('trip', 'Выполняемый рейс')
+            AssociationField::new('trip', 'Выполняемый рейс')->hideOnForm(),
         ];
     }
 }

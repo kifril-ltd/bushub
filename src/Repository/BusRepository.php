@@ -22,11 +22,12 @@ class BusRepository extends ServiceEntityRepository
     /**
      * @return Bus[] Returns an array of Bus objects
      */
-    public function findAllUnused()
+    public function findAllUnused(?int $tripId)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.trip = :val')
-            ->setParameter('val', null)
+            ->Where('b.trip is NULL')
+            ->orWhere('b.trip = :val')
+            ->setParameter('val', $tripId)
             ->getQuery()
             ->getResult()
         ;

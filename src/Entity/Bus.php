@@ -28,10 +28,10 @@ class Bus
     private $seatsNumber;
 
     /**
-     * @ORM\OneToOne(targetEntity=Trip::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="trip_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne(targetEntity=Trip::class, inversedBy="bus", cascade={"persist", "remove"})
      */
     private $trip;
+
 
     public function __toString()
     {
@@ -72,15 +72,11 @@ class Bus
         return $this->trip;
     }
 
-    public function setTrip(Trip $trip): self
+    public function setTrip(?Trip $trip): self
     {
-        // set the owning side of the relation if necessary
-        if ($trip->getBus() !== $this) {
-            $trip->setBus($this);
-        }
-
         $this->trip = $trip;
 
         return $this;
     }
+
 }

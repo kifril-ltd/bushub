@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Route as RouteEntity;
+use App\Entity\Trip;
 use App\Repository\RouteRepository;
 use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,8 +24,9 @@ class HomeController extends AbstractController
     #[Route('/trips/{id}', name: 'trips')]
     public function trips4Route(Request $request, RouteEntity $route): Response
     {
+        $trips = $this->getDoctrine()->getRepository(Trip::class)->findAllTripsWithBus4Route($route->getId());
         return $this->render('home/trips4route.html.twig', [
-            'trips' => $route->getTrips(),
+            'trips' => $trips,
         ]);
     }
 }

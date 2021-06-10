@@ -5,22 +5,36 @@
 {% block body %}
     <div class="container">
         {% for trip in trips %}
-            <div class="card w-75 mx-auto my-2">
-                <div class="card-header">
-                    <h5>Время отправления: {{ trip.departureTime|date('H:i') }}</h5>
-                    <h5>Время прибытия: {{ trip.arrivalTime|date('H:i') }}</h5>
-                </div>
-                <div class="card-body">
-                    <h6>Регулярность</h6>
-                    {% for weekday in trip.regularity %}
-                    <span class="lead"><span class="badge badge-light">{{ weekday }}</span></span>
-                    {% endfor %}
-                </div>
-                {% if app.user %}
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Купить билет</a>
+            <div class="card w-100 mx-auto my-2 p-0">
+                <div class="card-body d-flex align-items-center justify-content-between ">
+                    <div class="alert alert-dark h-100">
+                        <h5>Время отправления: {{ trip.departureTime|date('H:i') }}</h5>
+                        <h5>Время прибытия: {{ trip.arrivalTime|date('H:i') }}</h5>
                     </div>
-                {% endif %}
+
+
+                    <div class="">
+                        <h6>Регулярность</h6>
+                        {% for weekday in trip.regularity %}
+                            <span class="lead"><span class="badge badge-info">{{ weekday }}</span></span>
+                        {% endfor %}
+                    </div>
+
+
+                    {% if app.user %}
+                        <div>
+                            <a href="{{ path('ticket_new', {'id': trip.id}) }}" class="btn btn-primary mx-2">Купить билет</a>
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CASHIER') %}
+                                <a href="{{ path('ticket_sell', {'id': trip.id}) }}" class="btn btn-danger mx-2">Продать билет</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer d-flex flex-row-reverse">
+                    <span class="lead"><span class="badge badge-success">Цена: {{ trip.price/100|number_format }} руб. </span></span>
+                </div>
+
+
             </div>
         {% endfor %}
     </div>

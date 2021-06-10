@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Bus;
-use App\Entity\Route;
+use App\Entity\Route as RouteEntity;
 use App\Entity\Ticket;
 use App\Entity\Trip;
 use App\Entity\User;
@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -36,7 +37,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('АИС "Автовокзал"', 'fa fa-home');
         yield MenuItem::linkToCrud('Автобусы', 'fas fa-list', Bus::class);
-        yield MenuItem::linkToCrud('Маршруты', 'fas fa-list', Route::class);
+        yield MenuItem::linkToCrud('Маршруты', 'fas fa-list',  RouteEntity::class);
         yield MenuItem::linkToCrud('Рейсы', 'fas fa-list', Trip::class);
         yield MenuItem::linkToCrud('Билеты', 'fas fa-list', Ticket::class);
         yield MenuItem::linkToCrud('Пользователи', 'fas fa-list', User::class);

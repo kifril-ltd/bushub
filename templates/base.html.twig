@@ -34,16 +34,26 @@
         <div class="d-flex">
             {% if is_granted('ROLE_USER') %}
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn-secondary" href="{{ path('admin') }}">Админ-панель</a>
+                    <div class="btn-group">
+                        <a class="btn btn-outline-info" href="{{ path('admin') }}">Админ-панель</a>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle mx-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Отчеты
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('trips_report') }}">По рейсам</a>
+                            <a class="dropdown-item" href="{{ path('routes_report') }}">По маршрутам</a>
+                            <a class="dropdown-item" href="{{ path('cashiers_report') }}">По кассирам</a>
+                        </div>
+                    </div>
+
                 {% endif %}
+                <a class="btn btn-outline-success mx-2" href="{{ path('user_profile', {'id':app.user.id}) }}">Купленные билеты</a>
                 <div>
                     <span class="text-white mx-1">Здравствуйте, {{ app.user.firstName }}</span> <a class="btn btn-outline-primary" href="{{ path('app_logout') }}">Выйти</a>
                 </div>
             {% else %}
 
                     <a class="btn btn-success mx-3" href="{{ path('app_register') }}">Зарегистрироваться</a>
-
-
                     <a class="btn btn-outline-primary" href="{{ path('app_login') }}">Войти</a>
 
             {% endif %}

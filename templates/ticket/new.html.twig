@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ticket{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="card w-75 mx-auto my-2">
+            <div class="px-3 d-flex flex-row align-items-center justify-content-between">
+                <div class="alert alert-dark my-auto">
+                    <h2>{{ trip.route }}</h2>
+                </div>
+
+                <div class="alert my-auto">
+                    <h5>Время отправления: <span class="lead"><span class="badge badge-info"> {{ trip.departureTime|date('H:i') }}</span></span></h5>
+                    <h5>Время прибытия: <span class="lead"><span class="badge badge-info"> {{ trip.arrivalTime|date('H:i') }}</span></span></h5>
+                </div>
+
+                <div>
+                    <span class="lead"><span class="badge badge-primary">Цена: {{ trip.price/100|number_format }} руб. </span></span>
+                </div>
+        </div>
+            <div class="card-footer">
+                {{ form_start(form) }}
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                    {{ form_widget(form) }}
+                    <button class="btn btn-success h-50 w-25">{{ button_label|default('Купить') }}</button>
+                </div>
+                {{ form_end(form) }}
+                {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js" integrity="sha512-tPXUMumrKam4J6sFLWF/06wvl+Qyn27gMfmynldU730ZwqYkhT2dFUmttn2PuVoVRgzvzDicZ/KgOhWD+KAYQQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        var today = new Date();
+        var lastDate = new Date(today.getFullYear(), today.getMonth(), 31);
+        jQuery(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'ru',
+                startDate: today,
+                endDate: lastDate,
+                daysOfWeekDisabled: {{ disabledWeekdays }},
+                daysOfWeekHighlighted: {{ daysOfWeekHighlighted }},
+                todayHighlight: true,
+            });
+        });
+    </script>
+{% endblock %}
